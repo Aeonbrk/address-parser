@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# README
 
-## Getting Started
+## 中文版
 
-First, run the development server:
+### 快递地址智能解析系统
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+**项目简介：**
+本项目致力于通过智能化手段优化物流效率，针对用户提交的复杂地址信息进行自动解析，精准抽取出省、市、区、街道、详细地址以及收件人姓名和联系方式。系统设计旨在克服传统手动输入的不规范性和信息缺失问题。
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**核心功能：**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **智能地址解析**
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+   - **输入:** 用户提交的文本信息，涵盖寄件/收件地址、电话号码、姓名。
+   - **输出:** 结构化数据，包括省、市、区、街道、详细地址、姓名和联系电话。
+   - **目标:** 确保所有地址信息的准确提取，无论格式如何。
 
-## Learn More
+2. **自主研发算法实现**
 
-To learn more about Next.js, take a look at the following resources:
+   - 要求完全自主开发地址解析逻辑，禁止调用第三方 API，深入理解并实践解析机制。
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. **现代化用户界面**
+   - 设计简洁、直观的操作界面，提升用户体验。
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+**进阶特性：**
 
-## Deploy on Vercel
+- **地址自动补全**
+  - 根据技术实力选做，加入地址输入时的智能提示功能，进一步提速并减少错误。
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## EN Version
+
+### Automated Express Address Intelligence Parsing System
+
+**Project Summary:**
+This project focuses on enhancing logistics efficiency through smart automation, parsing complex user-submitted address data to precisely extract province, city, district, street, detailed address, recipient's name, and contact details. It's tailored to overcome inconsistencies and missing information common in manual entry processes.
+
+**Key Features:**
+
+1. **Smart Address Parsing**
+
+   - **Input:** Text containing shipping/receiving addresses, phone numbers, and names.
+   - **Output:** Structured data comprising province, city, district, street, specifics, name, and phone.
+   - **Goal:** Ensure accurate extraction regardless of input format variations.
+
+2. **Proprietary Algorithm Development**
+
+   - Mandates in-house development of parsing logic, barring use of external APIs, fostering deep comprehension of the parsing mechanism.
+
+3. **Contemporary UI Design**
+   - Provides a sleek, intuitive interface for optimized user interaction.
+
+**Advanced Features:**
+
+- **Auto-Complete Addresses**
+  - An optional addition based on technical proficiency, this feature introduces real-time suggestions during address input, boosting speed and accuracy.
