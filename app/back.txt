@@ -1,0 +1,127 @@
+'use client';
+
+import axios from 'axios';
+import React, {useState} from 'react';
+import './style/style.css';
+
+export default function Home() {
+  // 初始化
+  const [addressText, setAddressText] = useState('');
+  const [parsedResult, setParsedResult] = useState(null);
+  const [addressList, setAddressList] = useState([]);
+  const [expandedItems, setExpandedItems] = useState({});
+
+  // 处理表单提交的异步函数
+  const handleSubmit = async () => {
+    try {
+      // 向后端发送POST请求，解析地址
+      const response = await axios.post(
+          'http://localhost:3001/parse-address', {addressText});
+      // 更新解析结果状态
+      setParsedResult(response.data);
+      // 将新的地址及解析结果添加到地址列表中
+      setAddressList([...addressList, {text: addressText, ...response.data}]);
+      // 清空地址文本框
+      setAddressText('');
+    } catch (error) {
+      // 错误处理，打印错误信息至控制台
+      console.error('地址解析错误:', error);
+    }
+  };
+
+  // 处理LLM解析的异步函数
+  const handleLLMParse = async () => {
+    try {
+      // 使用glm4_total函数解析地址
+      const response = await axios.post(
+          'http://localhost:3001/llm-parse-address', {addressText});
+      // 更新解析结果状态
+      setParsedResult(response.data);
+      // 将新的地址及解析结果添加到地址列表中
+      setAddressList([...addressList, {text: addressText, ...response.data}]);
+      // 清空地址文本框
+      setAddressText('');
+    } catch (error) {
+      // 错误处理，打印错误信息至控制台
+      console.error('LLM地址解析错误:', error);
+    }
+  };
+
+  const toggleExpand = (index) => {
+    setExpandedItems((prev) => ({
+                       ...prev,
+                       [index]: !prev[index],
+                     }));
+  };
+
+  return (
+    <div className='container'>
+      <div className='card'>
+        <h1 className='title'>地址解析器</h1>
+        <textarea
+          value={addressText}
+          onChange={(e) => setAddressText(e.target.value)}
+          placeholder="输入地址信息"
+          className="input"
+          style={{ height: 'auto', minHeight: '40px', maxHeight: '200px' }}
+          rows={1}
+          onInput={(e) => {
+            e.target.style.height = 'auto';
+            e.target.style.height = `${e.target.scrollHeight}px`;
+          }}
+        />
+        <h2 className='instruction'>
+          <p>请确保地址信息格式正确，否则解析结果可能不准确!</p>
+          <p>例如：</p>
+          <p>&emsp;1. 江苏省南京市栖霞区文苑路21号南京邮电大学仙林校区 张三15866697485</p>
+          <p>&emsp;2. 张三15866697485江苏省南京市栖霞区文苑路21号南京邮电大学仙林校区</p>
+      <div className = 'attention'>
+          <p>请注意——</p>
+          <p>&emsp;1. 若姓名在地址之后，请留意地址和姓名之间的空格!!</p>
+      </div>
+        </h2>
+
+        <div class="button-container">
+            <button onClick={handleSubmit} class="button">解析</button>
+            <button onClick={handleLLMParse} class="button">试试LLM处理</button>
+        </div>
+
+        {parsedResult && (
+          <div className='result'>
+            <p><span className='label'>省:</span> {parsedResult.province}</p>
+            <p><span className='label'>市:</span> {parsedResult.city}</p>
+            <p><span className='label'>区:</span> {parsedResult.area}</p>
+            <p><span className='label'>街道:</span> {parsedResult.street}</p>
+            <p><span className='label'>详细地址:</span> {parsedResult.addr}</p>
+            <p><span className='label'>姓名:</span> {parsedResult.name}</p>
+            <p><span className='label'>电话号码:</span> {parsedResult.mobile}</p>
+          </div>
+        )}
+      </div>
+      <div className='card'>
+        <h2 className='title'>已输入的地址</h2>
+        <ul>
+          {addressList.map((address, index) => (
+            <li key={index} className='address-item'>
+              <p>{index + 1}: {address.text}</p>
+              <button className='expand-button' onClick={() => toggleExpand(index)}>
+                {expandedItems[index] ? '折叠' : '展开'}
+              </button>
+              {expandedItems[index] && (
+                <div className='label'>
+                  <p>省: {address.province}</p>
+                  <p>市: {address.city}</p>
+                  <p>区: {address.area}</p>
+                  <p>街道: {address.street}</p>
+                  <p>详细地址: {address.addr}</p>
+                  <p>姓名: {address.name}</p>
+                  <p>电话号码: {address.mobile}</p>
+                </div>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
